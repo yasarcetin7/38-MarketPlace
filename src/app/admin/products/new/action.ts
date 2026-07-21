@@ -10,6 +10,7 @@ import { ProductCategory } from '@/types/product';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { put } from '@vercel/blob';
+import { stripe } from '@/lib/stripe';
 
 
 export type CreateProductFormValues = {
@@ -105,13 +106,42 @@ export async function createProduct(
 
   let productId: string;
   try {
-    const result = await createProductRecord(parsed.data, imageUrls);
+    // 🚀 2. DEĞİŞİKLİK: ÖNCE STRIPE'TA ÜRÜN VE FİYAT OLUŞTURUYORUZ
+    
+    // a. Stripe Ürününü Oluştur
+    const stripeProduct = await stripe.products.create({
+      name: parsed.data.name,
+      description: parsed.data.description,
+      images: imageUrls.length > 0 ? imageUrls : undefined,
+      active: parsed.data.isActive,
+    });
+
+    // b. Stripe Fiyatını Oluştur
+    const stripePrice = await stripe.prices.create({
+      product: stripeProduct.id,
+      unit_amount: parsed.data.priceCents,
+      currency: parsed.data.currency.toLowerCase(),
+    });
+
+    // c. Bu fiyatı ürünün "varsayılan" (default) fiyatı yap
+    await stripe.products.update(stripeProduct.id, {
+      default_price: stripePrice.id,
+    });
+
+    // 🚀 3. KENDİ VERİTABANIMIZA KAYDEDİYORUZ (Stripe'tan gelen ID'leri de içine koyarak)
+    const result = await createProductRecord(
+      parsed.data, 
+      imageUrls,
+      stripeProduct.id, // Yeni eklediğimiz parametre
+      stripePrice.id    // Yeni eklediğimiz parametre
+    );
+    
     productId = result.id;
-  } catch (error) { // error kelimesini ekledik
-    console.error("VERİTABANI KAYIT HATASI:", error); // BUNU EKLE
+  } catch (error) { 
+    console.error("KAYIT HATASI:", error); 
     return {
-      success: false, // Type hatası almamak için bunu da ekleyelim
-      message: 'Could not create the product. Please try again.',
+      success: false, 
+      message: 'Could not create the product in Stripe or DB. Please try again.',
       values,
     };
   }
