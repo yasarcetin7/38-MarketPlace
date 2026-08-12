@@ -51,6 +51,7 @@ function toProduct(record: PrismaProduct): Product {
     createdAt: record.createdAt,
     updatedAt: record.updatedAt,
     stripePriceId: record.stripePriceId || "",
+    stripeProductId: record.stripeProductId || "",
   };
 }
 
