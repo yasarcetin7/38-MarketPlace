@@ -3,7 +3,6 @@
 import { createProductDataSchema } from "@/lib/validation";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-// 🚀 YENİ: Vercel'den silme işlemi için 'del' komutunu da import ediyoruz
 import { put, del } from "@vercel/blob";
 import { prisma } from "@/lib/prisma";
 import { Currency } from "@/types/currency";
