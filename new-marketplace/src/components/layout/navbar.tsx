@@ -20,13 +20,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-// 🚀 DİKKAT: Sadece "type" olarak import ediyoruz, auth0'ı çalıştırmıyoruz!
 import type { Auth0SessionUser } from "@/lib/auth0"; 
 import { ModeToggle } from "@/components/ModeToggle";
 
-// 🚀 DİKKAT: isAdmin'i artık layout'tan prop olarak alıyoruz
 export function Navbar({ user, isAdmin }: { user: Auth0SessionUser | null, isAdmin: boolean }) {
-  const userIsAdmin = isAdmin; // Layout'tan gelen bilgi
+  const userIsAdmin = isAdmin; 
   const pathname = usePathname();
   const isForbiddenPage = pathname === "/forbidden";
 
@@ -58,8 +56,8 @@ export function Navbar({ user, isAdmin }: { user: Auth0SessionUser | null, isAdm
             <NavigationMenu>
               <NavigationMenuList>
                 
-                {/* NORMAL KULLANICI LİNKLERİ */}
-                {!userIsAdmin && (
+                {/* ALL PERSONS LİNKS */}
+                {(
                   <>
                     <NavigationMenuItem>
                       <Button asChild variant="ghost" className={navigationMenuTriggerStyle()}>
@@ -75,24 +73,12 @@ export function Navbar({ user, isAdmin }: { user: Auth0SessionUser | null, isAdm
                   </>
                 )}
 
-                {/* ADMİN LİNKLERİ */}
+                {/* ADMİN LİNKS */}
                 {userIsAdmin && (
                   <>
                     <NavigationMenuItem>
                       <Button asChild variant="ghost" className={navigationMenuTriggerStyle()}>
                         <Link href="/admin/products">PRODUCT SETTINGS</Link>
-                      </Button>
-                    </NavigationMenuItem>
-
-                    <NavigationMenuItem>
-                      <Button asChild variant="ghost" className={navigationMenuTriggerStyle()}>
-                        <Link href="/admin/categories">CATEGORIES SETTINGS</Link>
-                      </Button>
-                    </NavigationMenuItem>
-
-                    <NavigationMenuItem>
-                      <Button asChild variant="ghost" className={navigationMenuTriggerStyle()}>
-                        <Link href="/admin/users">USERS SETTINGS</Link>
                       </Button>
                     </NavigationMenuItem>
                   </>

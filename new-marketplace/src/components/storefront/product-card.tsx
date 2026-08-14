@@ -69,7 +69,6 @@ export function ProductCard({
       <CardFooter className="border-t border-border pt-4 flex justify-between">
         <p className="text-lg font-semibold text-foreground">{priceLabel}</p>
         
-        {/* 🚀 5. DEĞİŞİKLİK: Eski CheckoutButton yerine Sepete Ekle Butonu */}
         <Button 
           onClick={() => {
             addItem({

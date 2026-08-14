@@ -3,7 +3,6 @@
 import { createProductDataSchema } from "@/lib/validation";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-// 🚀 YENİ: Vercel'den silme işlemi için 'del' komutunu da import ediyoruz
 import { put, del } from "@vercel/blob";
 import { prisma } from "@/lib/prisma";
 import { Currency } from "@/types/currency";
@@ -51,10 +50,10 @@ export async function editProduct(
     };
   }
 
-  // 🚀 1. Formdan gelen (kullanıcının silmediği) "kalan eski resimleri" al
+  
   const existingImages = formData.getAll("existingImages") as string[];
 
-  // 🚀 2. Veritabanındaki ürünün orijinal halini çek
+ 
 const oldProduct = await prisma.product.findUnique({
     where: { id: productId }
   });
@@ -66,23 +65,21 @@ const oldProduct = await prisma.product.findUnique({
     };
   }
 
-  // 🚀 3. Temizlik Vakti! Kullanıcının X'e basıp sildiği resimleri bul
-  // (Eskiden var olan ama şu an formdan gelmeyen resimler)
+ 
   const deletedImages = oldProduct?.imageUrls.filter(
     (oldUrl) => !existingImages.includes(oldUrl),
   );
 
-  // Eğer silinen resim varsa, Vercel Blob'dan yer kaplamaması için temelli sil (Pro Özellik!)
+ 
   if (deletedImages && deletedImages.length > 0) {
     try {
       await del(deletedImages);
     } catch (error) {
       console.error("Vercel'den resim silinirken hata oluştu:", error);
-      // Vercel'den silinemese bile devam et, MongoDB'den çıkaracağız zaten
+      
     }
   }
 
-  // 4. Yeni Fotoğrafları Yükle
   const images = formData
     .getAll("images")
     .filter((entry): entry is File => entry instanceof File && entry.size > 0);
@@ -101,18 +98,16 @@ const oldProduct = await prisma.product.findUnique({
     );
   }
 
-  // 🚀 5. Geriye kalan eski resimlerle, yeni yüklenen resimleri BİRLEŞTİR!
+  
   const finalImageUrls = [...existingImages, ...newImageUrls];
 
-  // 6. Veritabanını ve Stripe'ı Senkronize Güncelle
   try {
-    // Artık oldProduct'ın var olduğundan %100 eminiz (TypeScript de emin)
+   
     let finalStripePriceId = oldProduct.stripePriceId; 
 
-    // A. ÖNCE STRIPE'I GÜNCELLİYORUZ
     if (oldProduct.stripeProductId) {
       
-      // 1. Fiyat Değişmişse Yeni Fiyat Oluştur
+    
       if (parsed.data.priceCents !== oldProduct.priceCents) {
         const newPrice = await stripe.prices.create({
           product: oldProduct.stripeProductId,
@@ -120,9 +115,8 @@ const oldProduct = await prisma.product.findUnique({
           currency: parsed.data.currency.toLowerCase(),
         });
         
-        finalStripePriceId = newPrice.id; // Yeni ID'yi hafızaya al
+        finalStripePriceId = newPrice.id; 
 
-        // Ürünün varsayılan fiyatını bu yeni fiyat yap
         await stripe.products.update(oldProduct.stripeProductId, {
           default_price: newPrice.id,
           name: parsed.data.name,
@@ -131,7 +125,7 @@ const oldProduct = await prisma.product.findUnique({
           images: finalImageUrls.length > 0 ? finalImageUrls : undefined,
         });
       } else {
-        // 2. Fiyat Değişmediyse Sadece Bilgileri Güncelle
+       
         await stripe.products.update(oldProduct.stripeProductId, {
           name: parsed.data.name,
           description: parsed.data.description,
@@ -141,7 +135,7 @@ const oldProduct = await prisma.product.findUnique({
       }
     }
 
-    // B. SONRA KENDİ VERİTABANIMIZI TEK SEFERDE GÜNCELLİYORUZ
+   
     await prisma.product.update({
       where: { id: productId },
       data: {
@@ -153,7 +147,7 @@ const oldProduct = await prisma.product.findUnique({
         stock: parsed.data.stock,
         isActive: parsed.data.isActive,
         imageUrls: finalImageUrls,
-        stripePriceId: finalStripePriceId, // 🚀 İşte doğru kimlik buraya kaydedilecek!
+        stripePriceId: finalStripePriceId,
       },
     });
 

@@ -57,9 +57,8 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* 🚀 userIsAdmin bilgisini de Navbar'a gönderiyoruz */}
+          
           <Navbar user={user} isAdmin={userIsAdmin} />
-
           <main className="flex-1">{children}</main>
         </ThemeProvider></CartProvider>
       </body>

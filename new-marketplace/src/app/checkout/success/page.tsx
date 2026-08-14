@@ -36,12 +36,14 @@ export default async function CheckoutSuccessPage({ searchParams }: CheckoutSucc
     return (
       <div className="flex flex-col items-center justify-center min-h-screen py-2">
         <h1 className="mb-4 text-4xl font-bold">Checkout Success</h1>
+        <div className="flex flex-col gap-4 text-center text-lg text-gray-600 max-w-md">
         <p className="text-center text-lg text-gray-600 max-w-md">
           Thank you for your purchase! Your order has been successfully processed.
-          <br />
-          <br />
+          </p>
+          <p>
           A confirmation email will be sent to <strong className="text-black">{session.customer_details?.email}</strong>.
         </p>
+        </div>
       </div>
     );
   }

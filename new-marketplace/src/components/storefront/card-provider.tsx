@@ -2,7 +2,6 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-// Sepette tutacağımız ürün bilgileri
 export type CartItem = {
   id: string;
   name: string;
@@ -14,7 +13,6 @@ export type CartItem = {
   quantity: number;
 };
 
-// Hafızanın yapabildiği işlemler
 type CartContextType = {
   items: CartItem[];
   addItem: (item: Omit<CartItem, "quantity">) => void;
@@ -24,38 +22,42 @@ type CartContextType = {
   decrementItem: (id: string) => void;
 };
 
-const CartContext = createContext<CartContextType | undefined>(undefined);
+const initialContext: CartContextType = {
+  items: [],
+  addItem: () => {},
+  removeItem: () => {},
+  clearCart: () => {},
+  cartTotal: 0,
+  decrementItem: () => {},
+};
+
+const CartContext = createContext<CartContextType>(initialContext);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
-  const [isMounted, setIsMounted] = useState(false);
-
-  // Sayfa yüklendiğinde eski sepeti tarayıcıdan (localStorage) al
-  useEffect(() => {
-    setIsMounted(true);
-    const savedCart = localStorage.getItem("shopping-cart");
-    if (savedCart) {
-      try {
-        setItems(JSON.parse(savedCart));
-      } catch (error) {
-        console.error("Sepet yüklenirken hata oluştu");
+  const [items, setItems] = useState<CartItem[]>(() => {
+    if (typeof window !== "undefined") {
+      const savedCart = localStorage.getItem("shopping-cart");
+      if (savedCart) {
+        try {
+          return JSON.parse(savedCart);
+        } catch (error) {
+          console.error("Sepet yüklenirken hata oluştu");
+        }
       }
     }
-  }, []);
+    return [];
+  });
 
-  // Sepet her değiştiğinde tarayıcıya kaydet
   useEffect(() => {
-    if (isMounted) {
-      localStorage.setItem("shopping-cart", JSON.stringify(items));
-    }
-  }, [items, isMounted]);
+    localStorage.setItem("shopping-cart", JSON.stringify(items));
+  }, [items]);
 
   const addItem = (item: Omit<CartItem, "quantity">) => {
     setItems((currentItems) => {
       const existingItem = currentItems.find((i) => i.id === item.id);
       if (existingItem) {
         return currentItems.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i,
         );
       }
       return [...currentItems, { ...item, quantity: 1 }];
@@ -76,29 +78,32 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         return currentItems.filter((i) => i.id !== id);
       }
       return currentItems.map((i) =>
-        i.id === id ? { ...i, quantity: i.quantity - 1 } : i
+        i.id === id ? { ...i, quantity: i.quantity - 1 } : i,
       );
     });
   };
 
-  // Sepetteki ürünlerin toplam fiyatını hesapla
   const cartTotal = items.reduce(
     (total, item) => total + item.priceCents * item.quantity,
-    0
+    0,
   );
 
   return (
-    <CartContext.Provider value={{ items, addItem, removeItem, clearCart, cartTotal, decrementItem  }}>
+    <CartContext.Provider
+      value={{
+        items,
+        addItem,
+        removeItem,
+        clearCart,
+        cartTotal,
+        decrementItem,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
 }
 
-// Diğer sayfalarda sepeti kolayca kullanmak için özel bir hook (kanca) oluşturuyoruz
 export function useCart() {
-  const context = useContext(CartContext);
-  if (context === undefined) {
-    throw new Error("useCart, CartProvider içinde kullanılmalıdır");
-  }
-  return context;
+  return useContext(CartContext);
 }

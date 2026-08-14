@@ -1,49 +1,69 @@
 import { NextResponse, NextRequest } from "next/server";
 import { headers } from "next/headers";
 import { stripe } from "@/lib/stripe";
+import { getSessionUser } from "@/lib/auth0";
+import { prisma } from "@/lib/prisma";
 
 export async function POST(req: NextRequest) {
   try {
+    const user = await getSessionUser();
+    if (!user) {
+      return NextResponse.json(
+        { error: "Unauthorized: Please log in before making a payment." },
+        { status: 401 },
+      );
+    }
+
     const headersList = await headers();
-    // origin bulunamazsa diye güvenlik olarak localhost yedeği ekledik
-    const origin = headersList.get("origin") || "http://localhost:3000"; 
-    
+    const origin = headersList.get("origin") || "http://localhost:3000";
     const formData = await req.formData();
-    // 1. Artık price_id değil, formdan gönderdiğimiz cartItems paketini alıyoruz
     const cartItemsString = formData.get("cartItems") as string;
 
     if (!cartItemsString) {
       throw new Error("Sepet verisi bulunamadı.");
     }
 
-    // 2. Metin halindeki bu paketi gerçek bir JavaScript Listesine çeviriyoruz
     const cartItems = JSON.parse(cartItemsString);
 
     if (cartItems.length === 0) {
       throw new Error("Sepetinizde ürün bulunmamaktadır.");
     }
 
-    // 🚀 3. İŞTE SİHİR BURADA: Sepetteki ürünleri Stripe formatına çeviriyoruz
-    const lineItems = cartItems.map((item: { stripePriceId: string; quantity: number }) => {
+    const productIds = cartItems.map((item: any) => item.id);
+
+    const dbProducts = await prisma.product.findMany({
+      where: {
+        id: { in: productIds },
+      },
+    });
+
+    const lineItems = cartItems.map((item: any) => {
+      const dbProduct = dbProducts.find((p) => p.id === item.id);
+
+      if (!dbProduct) {
+        throw new Error(
+          `Ürün bulunamadı veya yayından kaldırıldı: ${item.name}`,
+        );
+      }
+
       return {
-        price: item.stripePriceId,
+        price: dbProduct.stripePriceId,
         quantity: item.quantity,
       };
     });
 
-    // Create Checkout Sessions from body params.
-    const session = await stripe.checkout.sessions.create({
-      line_items: lineItems, // 🚀 Tüm sepet listesini buraya verdik!
+    const checkoutSession = await stripe.checkout.sessions.create({
+      line_items: lineItems,
       mode: "payment",
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/`, // Müşteri ödemeden vazgeçerse ana sayfaya dönsün
+      cancel_url: `${origin}/`,
     });
 
-    if (!session.url) {
+    if (!checkoutSession.url) {
       throw new Error("Stripe ödeme linki oluşturamadı.");
     }
 
-    return NextResponse.redirect(session.url, 303);
+    return NextResponse.redirect(checkoutSession.url, 303);
   } catch (err: any) {
     console.error("Stripe Checkout Hatası:", err);
     return NextResponse.json(
