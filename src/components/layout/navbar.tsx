@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { CartMenu } from "@/components/storefront/card-menu";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -103,6 +104,7 @@ export function Navbar({ user, isAdmin }: { user: Auth0SessionUser | null, isAdm
 </div>
         {/* SAĞ KISIM: KARANLIK MOD VE KULLANICI PROFİLİ */}
         <div className="flex items-center gap-4">
+          <CartMenu userName={(user ? (user.given_name || user.name) : undefined) as string | undefined} />
           <ModeToggle />
           
           {!user ? (

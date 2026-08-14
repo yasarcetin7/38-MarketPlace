@@ -1,6 +1,8 @@
-import Image from "next/image";
+"use client"; 
 
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button"; // 🚀 2. DEĞİŞİKLİK: Kendi Butonumuzu ekledik
 import {
   Card,
   CardDescription,
@@ -10,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Currency, formatPrice } from "@/types/currency";
 import { formatCategoryLabel, type ProductCategory } from "@/types/product";
+import { useCart } from "@/components/storefront/card-provider";
 
 type ProductCardProps = {
   id: string;
@@ -19,20 +22,25 @@ type ProductCardProps = {
   currency: string;
   category: ProductCategory;
   imageUrl?: string;
+  stripePriceId: string;
+  stripeProductId?: string; // Hata vermemesi için opsiyonel (?) yaptık
 };
 
 export function ProductCard({
+  id, // 🚀 3. DEĞİŞİKLİK: ID'yi içeri aldık (Sepet için çok önemli!)
   name,
   description,
   priceCents,
   currency,
   category,
   imageUrl,
+  stripePriceId,
+  stripeProductId = "",
 }: ProductCardProps) {
-  const priceLabel = formatPrice(
-    priceCents,
-    currency as Currency,
-  );
+  const priceLabel = formatPrice(priceCents, currency as Currency);
+  
+  // 🚀 4. DEĞİŞİKLİK: Sepet hafızasını çağırıyoruz
+  const { addItem } = useCart(); 
 
   return (
     <Card className="overflow-hidden">
@@ -58,8 +66,26 @@ export function ProductCard({
         </div>
         <CardDescription className="line-clamp-2">{description}</CardDescription>
       </CardHeader>
-      <CardFooter className="border-t border-border pt-4">
+      <CardFooter className="border-t border-border pt-4 flex justify-between">
         <p className="text-lg font-semibold text-foreground">{priceLabel}</p>
+        
+        {/* 🚀 5. DEĞİŞİKLİK: Eski CheckoutButton yerine Sepete Ekle Butonu */}
+        <Button 
+          onClick={() => {
+            addItem({
+              id,
+              name,
+              priceCents,
+              currency,
+              imageUrl,
+              stripePriceId,
+              stripeProductId,
+            });
+          }}
+        >
+          Add To Cart
+        </Button>
+        
       </CardFooter>
     </Card>
   );

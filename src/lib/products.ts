@@ -1,5 +1,5 @@
 import type { Product as PrismaProduct } from "@/generated/prisma";
-
+import { stripe } from '@/lib/stripe';
 import { parseStorefrontFiltersFromSearchParams } from "@/lib/validation";
 import type { CreateProductData } from "@/lib/validation/product";
 import { prisma } from "@/lib/prisma";
@@ -11,6 +11,7 @@ import {
 } from "@/types/product";
 
 export type Product = {
+  stripePriceId: string;
   id: string;
   name: string;
   description: string;
@@ -49,6 +50,8 @@ function toProduct(record: PrismaProduct): Product {
     isActive: record.isActive,
     createdAt: record.createdAt,
     updatedAt: record.updatedAt,
+    stripePriceId: record.stripePriceId || "",
+    stripeProductId: record.stripeProductId || "",
   };
 }
 
@@ -95,11 +98,15 @@ export async function getProductById(id: string) {
 export async function createProduct(
   data: CreateProductData,
   imageUrls: string[],
+  stripeProductId: string, 
+  stripePriceId: string,
 ): Promise<Product> {
   const record = await prisma.product.create({
     data: {
       ...data,
       imageUrls,
+      stripeProductId: stripeProductId, 
+      stripePriceId: stripePriceId,
     },
   });
   return toProduct(record);
@@ -123,7 +130,26 @@ export async function deleteProductById(id: string) {
   if (!product) {
     throw new Error("Silinecek ürün bulunamadı.");
   }
+if (product.stripeProductId) {
+    try {
+      // A. Ürünü pasife al (Arşivle)
+      await stripe.products.update(product.stripeProductId, {
+        active: false,
+      });
 
+      // B. Fiyatı pasife al (Arşivle)
+      if (product.stripePriceId) {
+        await stripe.prices.update(product.stripePriceId, {
+          active: false,
+        });
+      }
+      console.log("Stripe'ta ürün ve fiyat başarıyla arşivlendi!");
+    } catch (stripeError) {
+      console.error("Stripe arşivleme sırasında hata:", stripeError);
+      // Not: Stripe'ta hata olsa bile (örneğin daha önce silinmişse) 
+      // işlemi durdurmuyoruz ki kendi veritabanımızdan da silebilelim.
+    }
+  }
   // 2. Ürünü MongoDB'den kalıcı olarak siliyoruz
   await prisma.product.delete({
     where: { id },

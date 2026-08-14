@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/navbar"; // Yolunu kendi klasörüne
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { getSessionUser, isAdmin } from "@/lib/auth0"; // 🚀 isAdmin'i buraya ekledik
+import { CartProvider } from "@/components/storefront/card-provider"; // CartProvider'ı import ettik
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -49,7 +50,7 @@ export default async function RootLayout({
       <body
         className="min-h-full flex flex-col font-sans"
         suppressHydrationWarning
-      >
+      ><CartProvider>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -60,7 +61,7 @@ export default async function RootLayout({
           <Navbar user={user} isAdmin={userIsAdmin} />
 
           <main className="flex-1">{children}</main>
-        </ThemeProvider>
+        </ThemeProvider></CartProvider>
       </body>
     </html>
   );
