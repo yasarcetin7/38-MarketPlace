@@ -12,6 +12,7 @@ import {
 
 export type Product = {
   stripePriceId: string;
+  stripeProductId: string;
   id: string;
   name: string;
   description: string;
