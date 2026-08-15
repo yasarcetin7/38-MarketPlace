@@ -148,7 +148,6 @@ const oldProduct = await prisma.product.findUnique({
         isActive: parsed.data.isActive,
         imageUrls: finalImageUrls,
         stripePriceId: finalStripePriceId,
-        stripeProductId: finalStripeProductId,
       },
     });
 
