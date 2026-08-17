@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-// dbUser null olabileceği için tipini esnek bırakıyoruz
+
 export function SettingsForm({ dbUser, email }: { dbUser: any; email: string }) {
   const router = useRouter();
   const [showToast, setShowToast] = useState(false);
@@ -22,13 +22,13 @@ export function SettingsForm({ dbUser, email }: { dbUser: any; email: string }) 
   async function handleSubmit(formData: FormData) {
     setIsLoading(true);
     try {
-      // 1. Verileri Server Action'a gönder ve kaydet
+      
       await updateUserSettings(formData);
       
-      // 2. İşlem bitince Sol Üstteki Toast bildirimini aç
+      
       setShowToast(true);
       
-      // 3. İki saniye (2000 ms) bekle ve Ana Sayfaya (/) yönlendir
+      
       setTimeout(() => {
         router.push("/");
       }, 2000);
@@ -42,7 +42,7 @@ export function SettingsForm({ dbUser, email }: { dbUser: any; email: string }) 
 
   return (
     <>
-      {/* 🚀 İŞTE İSTEDİĞİN BİLDİRİM (Sol Üstte, Hafif Oval) */}
+      {}
       {showToast && (
         <div className="fixed top-6 left-6 z-50 flex items-center bg-green-500 text-white px-5 py-3 rounded-2xl shadow-xl transition-all animate-in fade-in slide-in-from-top-5">
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,7 +60,7 @@ export function SettingsForm({ dbUser, email }: { dbUser: any; email: string }) 
           </CardDescription>
         </CardHeader>
         
-        {/* Formu artık doğrudan handleSubmit fonksiyonuna bağlıyoruz */}
+        {}
         <form action={handleSubmit}>
           <CardContent className="space-y-4">
             

@@ -4,7 +4,7 @@ export default async function LoggedInLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Güvenlik görevlisini kapıya diktik! Giriş yapmayanı anında /auth/login'e atacak.
+  
   await requireUser();
 
   return (

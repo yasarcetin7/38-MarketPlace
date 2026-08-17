@@ -22,7 +22,7 @@ export function formatPrice(priceCents: number, currency: Currency): string {
   }).format(priceCents / 100);
 }
 
-/** Converts a validated major-unit price string (e.g. "19.00") to integer cents. */
+
 export function priceStringToCents(price: string): number {
   const [whole, fraction = ""] = price.split(".");
   return Number(whole) * 100 + Number(fraction.padEnd(2, "0").slice(0, 2));
