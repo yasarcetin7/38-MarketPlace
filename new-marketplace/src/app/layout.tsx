@@ -4,8 +4,8 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/navbar"; // Yolunu kendi klasörüne göre kontrol et
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
-import { getSessionUser, isAdmin } from "@/lib/auth0"; // 🚀 isAdmin'i buraya ekledik
-import { CartProvider } from "@/components/storefront/card-provider"; // CartProvider'ı import ettik
+import { getSessionUser, isAdmin } from "@/lib/auth0-utils";
+import { CartProvider } from "@/components/storefront/card-provider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -30,7 +30,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   
-  // 🚀 Kullanıcıyı ve Admin olup olmadığını BURADA (Güvenli Sunucuda) kontrol ediyoruz
+  
   const user = await getSessionUser();
   const userIsAdmin = isAdmin(user);
 
