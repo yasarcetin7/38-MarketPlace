@@ -1,4 +1,4 @@
-import { requireUser } from "@/lib/auth0";
+import { requireUser } from "@/lib/auth0-utils";
 import { prisma } from "@/lib/prisma"; 
 import { SettingsForm } from "./SettingsForm";
 

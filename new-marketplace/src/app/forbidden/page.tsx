@@ -1,4 +1,4 @@
-import { getSessionUser, isAdmin } from "@/lib/auth0";
+import { getSessionUser, isAdmin } from "@/lib/auth0-utils";
 import { redirect } from "next/navigation";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";

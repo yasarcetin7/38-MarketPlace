@@ -1,6 +1,6 @@
 "use server";
 
-import { requireUser } from "@/lib/auth0";
+import { requireUser } from "@/lib/auth0-utils";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 

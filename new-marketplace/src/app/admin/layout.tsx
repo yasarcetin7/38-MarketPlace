@@ -1,4 +1,4 @@
-import { requireAdmin } from "@/lib/auth0";
+import { requireAdmin } from "@/lib/auth0-utils";
 
 export default async function AdminLayout({
   children,
