@@ -1,0 +1,75 @@
+{
+  "cookies": [
+    {
+      "name": "__cf_bm",
+      "value": "mw.viSRYjjUS7ooYjxweiDRkbMmXU.JY1CEf6WK8phM-1787531578.529535-1.0.1.1-evUjgQ7kGrx4zGUnvQzRpDBSh4ZktYpzzrnvICR8mpHH13UEhoFdlkIWF3dkvBxHlTHs_CkPp6LvUherhFn_oggfgwGqBysb4SkczDAO5yhsnISBcblHyVybM6dGFWfM",
+      "domain": ".eu.auth0.com",
+      "path": "/",
+      "expires": 1787533379.783935,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "did",
+      "value": "s%3Av0%3Aa0060808-32a6-4bb7-a3e3-bbb74f39117a%3Ad0dfc5709236b15fe24bcb1c18921ffa0ee954c4400ba7fdc3877123da2a8e07.spcL1yYl3jLqf5OxVHWGwXK%2BME94d9NkpwG47jfuKuk",
+      "domain": "quotes-project32.eu.auth0.com",
+      "path": "/",
+      "expires": 1819089181.261985,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "did_compat",
+      "value": "s%3Av0%3Aa0060808-32a6-4bb7-a3e3-bbb74f39117a%3Ad0dfc5709236b15fe24bcb1c18921ffa0ee954c4400ba7fdc3877123da2a8e07.spcL1yYl3jLqf5OxVHWGwXK%2BME94d9NkpwG47jfuKuk",
+      "domain": "quotes-project32.eu.auth0.com",
+      "path": "/",
+      "expires": 1819089181.262517,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "auth0",
+      "value": "s%3ApX9tdGSLO8EJ8oBg3tvTu0Ci6pvCblMN.7KvfCweyRK6r0qftqkEZB%2FVJDJG25XuU8QUWoIB17yU",
+      "domain": "quotes-project32.eu.auth0.com",
+      "path": "/",
+      "expires": 1787790781.697337,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "auth0_compat",
+      "value": "s%3ApX9tdGSLO8EJ8oBg3tvTu0Ci6pvCblMN.7KvfCweyRK6r0qftqkEZB%2FVJDJG25XuU8QUWoIB17yU",
+      "domain": "quotes-project32.eu.auth0.com",
+      "path": "/",
+      "expires": 1787790781.697477,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__session",
+      "value": "eyJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiZGlyIn0..2E9yxJqM_EgqjyU_.CFkRC9xYWh7UAHgnpRzvQg6vKyKzCr-izoOHB3ssuR6U4fZJEfaJvyuSUJwUAXo_OuX6fIeUd_bdf16g2HTdlylWWSiU1lBD_JBV3kbLhKqfaSYh03MoheDF6s2YQqoQSeBP-XRSRdQpXhCjJJZsHiKLSpBjPrdkIbH9mfdl0TY9QPygIcmuDW4v46j4eDWvsperOt1lf4D9x9IAGPbP1CSSnKVOyyTv_g5479J3BOOKV7ojo1YVZ8rlzbAqnWiQaKXCagi9ybJWwB5ST7fikx2IErhanadLP4gP9m2LOOmP3yhNhoieVws-GX_uKAZNbpaO7kS7cz1WNSReJQmNTpuzDvBWr2jBUPKRJtuVlYTvI0kFKIq8UoPriTWg3mUE8GxGJ8U5vy2Fa-Y4D0aaQ9E65i6biexZoAeeQ-GIgyurxv1NwD4782_2z0qed8VPrQX0Wp8oEqJyH50E5BhlGW1w6m2EnS5VqLTwDpZlgZNyI-afqCwz-4YGQ69tMIbACCep3C8vC0yrL7aLFOz0lP_YhtDWQ8WZxxGBV76IJGVT3GI8WcbrkDJX8JuGxMrMmdL-K4kbHKivd3kFxbvIhQIFp7PQHFGfQgkoD6qJHB8n-6yetnh1zB74uSTd5h_ZzKz9oSbNPTAK40SoPc7WdVkSPesq4hwCXIdGRs1TYLFtH8To__MPA4TcceRN8AFb-3s_VLSN5yBA67ulRaEQ0Q7rNWuqqhuBXE43cEgkHTd-MU4ZZFv618YBs8Rh6lnVNFkiMbyeI2KYb4Fm8yRoEvyGQMm0n_rvVjw9cRawSswyAT-LsvmaZMhv1BlFBTJUyHbZROGFwDbz2clveM_ll1OMAkFSTdS1v5R2rwNJoeqcdjp8vVJMQzoyFnLQuObO5DMlV9RRCTQg9Hn0isjhk3cVCuIf-Noaps7a2sTL0wE0aNgEKtEnlcexO0F-luKXNjW7IVpdopeyHXootP8U_Jb5h5kgdQD9nFr2hKpIqnwjL_aWeTe8LJdVuyFMDnAYkSh9o7rSrhO9xAPv8QcrMDQrOjBRyjLwHIQg1zmdQ3fMG7NYItSmWL1sJLC0uOVgACYd22_qd2-mqJkroP_tbqn6axRkQVLyaXFgtXvLZlkKrcd-lf3wtzx3qXlVDQZlAeG_18jZQ5rv6-4eazKx9FUTTeVH4_V4e2qc_F8yQXy22SFUgc8bWQTTN7Q2g8W2TsUvNqtC_G5284kKdlGrW1Mem6A-G3tz9jU0XFzDYOTJd3yzVzB58pDGcOUgRbqqqjaYHCaVkSBVa766iRya2SaKSm16Tuw6QrgcCqJJyc7DQH6OBnU5kPRYk30mUj9fJoQe-6w-Vfjaq0Z9E5IBGFOaNTLbJFbvcn7FL0xwYy2-I0GTKpl63tgL0ysFHRmVG4Gx030838kqOfHcxSfHbOzUpmCYnYK-h04NlKoZqIITOummuUVUU1UDXxZjZhOHOdlIXc7OLReVnO6s_rEMvVlUNkmdjV-azlHzusA-bgPJFJ7hMmuMFuHRXPiSjMWbIQz8vrjENozNmwq_7WqwOfrNer3tNqjrD1_8__vLe3RbJpTDYDogzJVR7NzOeI8lTPBQF7mcR1kRgIL_M2NeD3BJwFv-BYZ4Ly2G2n4Jce5EgF2O881DeXXPvj6wzHP-7rVIGfQ49jawIVxVX4YFtjIskJflh_Q3Tf5x_FYl21L5AwfZHMNHdkVtwaeI-WJAJIi_CGeVNcs_tRsuLnAiAzpYUludSrJhYKVOq8iNwd1KeyTTSfhsDzpO4B0bYF5e2w7FOTX3TkiJF_Y8KrEjHK1Qi4rfHVmosuuI_Jwuw-Ats1MPMwytxE9yq8z3rTL6GM8OOLscvKztRS6SLqCADMPlB6S8AUwnR7Ii6p4ViYi7rxyVcSShCRJARMXf3I8CIkj1wqiv5WSHAC19IubSRUpnmfVKlyq5szdG_1FATIYWaLxv1fxUScSfglSRMSupyusLaJIQc1Ip-CVoBkAv7kSPd9Yi4FdLlErHFNWh0CXPJG2UhvWke9R8ShFe96vlOAXgHLFaC2cphWaNai5mABl4uSO2tRKdTNOVsGAxVZDA2ZUH90B0Mvr7PkWSpDGam74gn-iKkzNDCfQQLnPXizcz74IfhoeogjkBde8Dmt-HRfwohArCuUATKT_mcB53Jil6HqhL8fb3-KJHAsJIRME52f6rslzr0afiiBAPLiB7U97v-wMYoATrhp6CZP-yOPhTA7N7xy1wPzFrFlQWy3yoVczJn44oN3TT_M1HJe_ratdIGGsFrZqJu_zrmj_oFiU87hJCax0hQRdDVVF8d-XWSLy7TnQObKnYLcu_wMv43kVGTxKGzezEtBgeBCg_E2eWBjrpOG5hVdhURymnzIAOq-D_hqZStoKVBBo-Q81TU3yOxkYRoIhOaN8ARMRtuVHIV4Wzi7yCbyn4lhlbM9H27b-IXcYcFeI5POTDPb2GZ1XERh0F89Tkn3ykRsRJB8MGvYb6SeREX3IeIkp6zX6CMSaKSF-aVwlRM_bqEDww1IHviqCxdRk_LuqTrFCx0Su1cFHwkhLONUI3zV8WFjNNOHUXvrwrLjV7GNW404Wk1lMXiFX4ctBAeI-SugngztNiTT_HWtZxzvT-EBieL4TP8ORhzdpDTp5PRDg_im2jFqjr7HWWRq79SabQt-To19MQSTnQaZg_iNmcjTS3yLH9QRTetJRheUF6WRGEs88Yw88l_mf01BvrACJpZjEPS-b9gqakDZ6lwJZzv5hNSLDyKQpZG3xkQdyRRd-6HeeStQkZTz3rEim-GZtjJIoaEdM9wlitk14Goml1Eb2GRqL8Jze8SliF1DyP1hzkli6jJH5ftuddOAxsT91xLBZWvpJKxuTRUSagLPK8fqujatqFKXd0gmLoyWOOpl-Mb5w3MivRdfe_IAuNLRix1458l05u4K204Wo3IDb5I-CoQ-cLax2lXIiArNdWvHp2N4KsA44JzoLmLpdYBQrkiNPwae-ruHK68_DABozpZ9dI78ZXFeF8AegzW4jQP7cHJv6oRmI91A9hX-SiMwvTvTb3QrqKNQ6ntWA5MOPQUIK9-WM8rvakJKMNgka3l9M.kIvO7_UzV5-H-tSglHGuxg",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1787617982.75921,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://localhost:3000",
+      "localStorage": [
+        {
+          "name": "shopping-cart",
+          "value": "[]"
+        }
+      ]
+    }
+  ]
+}
