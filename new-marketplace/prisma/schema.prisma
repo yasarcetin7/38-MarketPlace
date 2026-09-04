@@ -38,6 +38,7 @@ enum Currency {
   EUR
   GBP
   TRY
+  USD
 }
 
 
@@ -58,4 +59,18 @@ model User {
   address   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  @@map("users") // Tablo adının veritabanında düzenli görünmesi için eklendi
+}
+model Order {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  userEmail       String   // Siparişi veren kullanıcının e-postası
+  totalAmount     Int      // Senin priceCents mantığına uygun (cent/kuruş cinsinden)
+  currency        String   // EUR, TRY vb.
+  stripeSessionId String   @unique
+  status          String   @default("COMPLETED") // Şimdilik varsayılan olarak tamamlandı yapıyoruz
+  items           Json?    // Sepetteki ürünlerin detayını JSON olarak tutacağız
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("orders") // MongoDB'de tablonun adı 'orders' olacak
 }

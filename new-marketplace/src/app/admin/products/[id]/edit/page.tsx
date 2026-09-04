@@ -25,7 +25,7 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
         </p>
       </div>
 
-      {/* Hazırladığımız formu buraya çağırdık ve veritabanından gelen ürünü içine gönderdik */}
+      
       <EditProductForm product={product} />
       
     </main>
