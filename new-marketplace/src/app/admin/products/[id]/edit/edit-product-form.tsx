@@ -20,10 +20,9 @@ export function EditProductForm({ product }: { product: any }) {
     FormData
   >(updateProductWithId, null);
 
-  // 🚀 YENİ: Eski resimleri ekranda tutmak ve silebilmek için State (Hafıza) oluşturuyoruz
+  
   const [existingImages, setExistingImages] = useState<string[]>(product.imageUrls || []);
 
-  // Çarpı (X) butonuna basıldığında resmi listeden çıkaran fonksiyon
   const handleRemoveImage = (urlToRemove: string) => {
     setExistingImages((prev) => prev.filter((url) => url !== urlToRemove));
   };
@@ -46,7 +45,7 @@ export function EditProductForm({ product }: { product: any }) {
         </div>
       )}
 
-      {/* 🚀 YENİ: Arka plana silinmeyen "Kalan Eski Resimleri" gizlice gönderiyoruz */}
+      
       {existingImages.map((url, index) => (
         <input key={index} type="hidden" name="existingImages" value={url} />
       ))}
@@ -115,11 +114,11 @@ export function EditProductForm({ product }: { product: any }) {
         <div>
           <h2 className="text-base font-semibold text-foreground">Images</h2>
           <p className="text-sm text-muted-foreground">
-            Mevcut resimleri çarpı (X) butonuna basarak silebilirsiniz.
+            You can delete the existing images by clicking the "X" button.
           </p>
         </div>
 
-        {/* 🚀 YENİ: Eski Resimlerin Ekranda Listelenmesi ve X Butonu */}
+        
         {existingImages.length > 0 && (
           <div className="flex flex-wrap gap-4 mb-4 border rounded-lg p-4 bg-muted/20">
             {existingImages.map((url, index) => (
@@ -129,7 +128,7 @@ export function EditProductForm({ product }: { product: any }) {
                   type="button"
                   onClick={() => handleRemoveImage(url)}
                   className="absolute top-1 right-1 bg-destructive text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-80 hover:opacity-100 transition-opacity shadow-sm"
-                  title="Resmi Sil"
+                  title="Delete İmage"
                 >
                   ✕
                 </button>

@@ -16,7 +16,9 @@ export async function ProductGrid({ category, sort }: ProductGridProps) {
   if (products.length === 0) {
     return (
       <div className="flex min-h-48 flex-col items-center justify-center rounded-xl border border-dashed border-border bg-muted/30 px-6 py-12 text-center">
-        <p className="text-sm font-medium text-foreground">No products available yet</p>
+        <p className="text-sm font-medium text-foreground">
+          No products available yet
+        </p>
         <p className="mt-1 text-sm text-muted-foreground">
           {category === "all"
             ? "Check back soon — new items will appear here."
@@ -27,7 +29,7 @@ export async function ProductGrid({ category, sort }: ProductGridProps) {
   }
 
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
       {products.map((product) => (
         <ProductCard
           key={product.id}
@@ -47,7 +49,7 @@ export async function ProductGrid({ category, sort }: ProductGridProps) {
 
 export function ProductGridSkeleton() {
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
       {Array.from({ length: 6 }).map((_, index) => (
         <div
           key={index}

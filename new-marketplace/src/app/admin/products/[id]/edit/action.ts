@@ -152,10 +152,10 @@ const oldProduct = await prisma.product.findUnique({
     });
 
   } catch (error) {
-    console.error("GÜNCELLEME HATASI:", error);
+    console.error("Update Error", error);
     return {
       success: false,
-      message: 'Ürün güncellenemedi. Lütfen tekrar deneyin.',
+      message: 'The product could not be updated. Please try again.',
       values,
     };
   }
