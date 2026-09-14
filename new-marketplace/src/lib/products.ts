@@ -1,5 +1,5 @@
 import type { Product as PrismaProduct } from "@/generated/prisma";
-import { stripe } from '@/lib/stripe';
+import { stripe } from "@/lib/stripe";
 import { parseStorefrontFiltersFromSearchParams } from "@/lib/validation";
 import type { CreateProductData } from "@/lib/validation/product";
 import { prisma } from "@/lib/prisma";
@@ -99,14 +99,14 @@ export async function getProductById(id: string) {
 export async function createProduct(
   data: CreateProductData,
   imageUrls: string[],
-  stripeProductId: string, 
+  stripeProductId: string,
   stripePriceId: string,
 ): Promise<Product> {
   const record = await prisma.product.create({
     data: {
       ...data,
       imageUrls,
-      stripeProductId: stripeProductId, 
+      stripeProductId: stripeProductId,
       stripePriceId: stripePriceId,
     },
   });
@@ -123,7 +123,6 @@ export function parseStorefrontFilters(
 }
 
 export async function deleteProductById(id: string) {
-  // 1. Önce ürünü buluyoruz (Çünkü Vercel'deki resim linklerini öğrenmemiz lazım)
   const product = await prisma.product.findUnique({
     where: { id },
   });
@@ -131,14 +130,12 @@ export async function deleteProductById(id: string) {
   if (!product) {
     throw new Error("Silinecek ürün bulunamadı.");
   }
-if (product.stripeProductId) {
+  if (product.stripeProductId) {
     try {
-      // A. Ürünü pasife al (Arşivle)
       await stripe.products.update(product.stripeProductId, {
         active: false,
       });
 
-      // B. Fiyatı pasife al (Arşivle)
       if (product.stripePriceId) {
         await stripe.prices.update(product.stripePriceId, {
           active: false,
@@ -147,15 +144,12 @@ if (product.stripeProductId) {
       console.log("Stripe'ta ürün ve fiyat başarıyla arşivlendi!");
     } catch (stripeError) {
       console.error("Stripe arşivleme sırasında hata:", stripeError);
-      // Not: Stripe'ta hata olsa bile (örneğin daha önce silinmişse) 
-      // işlemi durdurmuyoruz ki kendi veritabanımızdan da silebilelim.
     }
   }
-  // 2. Ürünü MongoDB'den kalıcı olarak siliyoruz
+
   await prisma.product.delete({
     where: { id },
   });
 
-  // 3. Bulduğumuz eski ürünü geri gönderiyoruz ki Vercel'den de fotoğraflarını silebilelim
   return product;
 }

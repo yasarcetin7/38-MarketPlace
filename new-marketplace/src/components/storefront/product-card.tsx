@@ -23,11 +23,11 @@ type ProductCardProps = {
   category: ProductCategory;
   imageUrl?: string;
   stripePriceId: string;
-  stripeProductId?: string; // Hata vermemesi için opsiyonel (?) yaptık
+  stripeProductId?: string; 
 };
 
 export function ProductCard({
-  id, // 🚀 3. DEĞİŞİKLİK: ID'yi içeri aldık (Sepet için çok önemli!)
+  id, 
   name,
   description,
   priceCents,
@@ -39,7 +39,7 @@ export function ProductCard({
 }: ProductCardProps) {
   const priceLabel = formatPrice(priceCents, currency as Currency);
   
-  // 🚀 4. DEĞİŞİKLİK: Sepet hafızasını çağırıyoruz
+ 
   const { addItem } = useCart(); 
 
   return (

@@ -106,9 +106,8 @@ export async function createProduct(
 
   let productId: string;
   try {
-    // 🚀 2. DEĞİŞİKLİK: ÖNCE STRIPE'TA ÜRÜN VE FİYAT OLUŞTURUYORUZ
     
-    // a. Stripe Ürününü Oluştur
+    
     const stripeProduct = await stripe.products.create({
       name: parsed.data.name,
       description: parsed.data.description,
@@ -116,24 +115,24 @@ export async function createProduct(
       active: parsed.data.isActive,
     });
 
-    // b. Stripe Fiyatını Oluştur
+    
     const stripePrice = await stripe.prices.create({
       product: stripeProduct.id,
       unit_amount: parsed.data.priceCents,
       currency: parsed.data.currency.toLowerCase(),
     });
 
-    // c. Bu fiyatı ürünün "varsayılan" (default) fiyatı yap
+   
     await stripe.products.update(stripeProduct.id, {
       default_price: stripePrice.id,
     });
 
-    // 🚀 3. KENDİ VERİTABANIMIZA KAYDEDİYORUZ (Stripe'tan gelen ID'leri de içine koyarak)
+   
     const result = await createProductRecord(
       parsed.data, 
       imageUrls,
-      stripeProduct.id, // Yeni eklediğimiz parametre
-      stripePrice.id    // Yeni eklediğimiz parametre
+      stripeProduct.id, 
+      stripePrice.id    
     );
     
     productId = result.id;

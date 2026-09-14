@@ -1,10 +1,10 @@
-import { requireUser } from "@/lib/auth0";
+import { requireUser } from "@/lib/auth0-utils";
 export default async function LoggedInLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Güvenlik görevlisini kapıya diktik! Giriş yapmayanı anında /auth/login'e atacak.
+  
   await requireUser();
 
   return (

@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { headers } from "next/headers";
 import { stripe } from "@/lib/stripe";
-import { getSessionUser } from "@/lib/auth0";
+import { getSessionUser } from "@/lib/auth0-utils";
 import { prisma } from "@/lib/prisma";
 
 export async function POST(req: NextRequest) {

@@ -11,18 +11,17 @@ import {
   SheetTrigger,
   SheetFooter,
 } from "@/components/ui/sheet";
-import { useCart } from "@/components/storefront/card-provider"; // Yolun doğru olduğundan emin ol
+import { useCart } from "@/components/storefront/card-provider"; 
 type CartMenuProps = {
-  userName?: string | null; // Kullanıcı giriş yapmamış olabilir, o yüzden opsiyonel (?) yaptık
+  userName?: string | null; 
 };
 export function CartMenu({ userName }: CartMenuProps) {
-  // 🚀 Hafızadaki (Context) verileri çekiyoruz
+
   const { items, removeItem, cartTotal, addItem, decrementItem } = useCart();
 
-  // Sepetteki toplam ürün sayısını hesaplıyoruz
   const cartItemCount = items.reduce((total, item) => total + item.quantity, 0);
 
-  // Kuruş (Cents) cinsinden gelen toplam fiyatı normale çeviriyoruz
+  
   const formattedTotal = (cartTotal / 100).toFixed(2);
 
   return (
@@ -48,14 +47,14 @@ export function CartMenu({ userName }: CartMenuProps) {
         </SheetHeader>
 
         <div className="flex-1 overflow-y-auto mt-6 flex flex-col gap-6 pr-4">
-          {/* Eğer sepet boşsa kullanıcıya mesaj göster */}
+          {}
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-muted-foreground gap-2">
               <ShoppingCart className="h-12 w-12 opacity-20" />
               <p>Your shopping cart is currently empty :\</p>
             </div>
           ) : (
-            /* Sepet doluysa ürünleri listele */
+            
             items.map((item) => (
               <div key={item.id} className="flex items-center space-x-4">
                 <div className="relative h-16 w-16 overflow-hidden rounded border bg-muted flex items-center justify-center">
@@ -73,7 +72,7 @@ export function CartMenu({ userName }: CartMenuProps) {
                       size="icon"
                       className="h-6 w-6"
                       onClick={() => decrementItem(item.id)}
-                      disabled={item.quantity <= 1} // Miktar 1 ise eksi butonu pasif olur
+                      disabled={item.quantity <= 1} 
                     >
                       <Minus className="h-3 w-3" />
                     </Button>
@@ -97,7 +96,7 @@ export function CartMenu({ userName }: CartMenuProps) {
                     variant="ghost"
                     size="icon"
                     className="h-6 w-6 text-muted-foreground hover:text-destructive"
-                    onClick={() => removeItem(item.id)} // 🚀 SİLME İŞLEMİ BURADA ÇALIŞIYOR
+                    onClick={() => removeItem(item.id)} 
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
@@ -107,7 +106,7 @@ export function CartMenu({ userName }: CartMenuProps) {
           )}
         </div>
 
-        {/* ALT KISIM: TOPLAM VE ÖDEME BUTONU */}
+        {}
         {items.length > 0 && (
           <div className="pt-4 border-t mt-auto">
             <div className="flex items-center justify-between">
@@ -119,9 +118,9 @@ export function CartMenu({ userName }: CartMenuProps) {
                 </span>
               </div>
               
-              {/* Sağ Taraf: Checkout Butonu */}
+              {}
               <SheetFooter>
-                {/* 🚀 DEĞİŞİKLİK BURADA: isLoggedIn bilgisini butona aktarıyoruz */}
+                {}
                 <CheckoutButton items={items} isLoggedIn={!!userName} />
               </SheetFooter>
             </div>
