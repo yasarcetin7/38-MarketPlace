@@ -49,10 +49,10 @@ export function ProductFilters({ category, sort }: ProductFiltersProps) {
           updateFilters({ category: value as ProductCategory | "all" })
         }
       >
-        <SelectTrigger className="w-full sm:w-52" aria-label="Select category">
+        <SelectTrigger className="w-full sm:w-52">
           <SelectValue placeholder="Category" />
         </SelectTrigger>
-        <SelectContent position="popper" side="bottom" sideOffset={5}>
+        <SelectContent>
           {PRODUCT_CATEGORY_FILTER_OPTIONS.map(({ value, label }) => (
             <SelectItem key={value} value={value}>
               {label}
@@ -69,10 +69,10 @@ export function ProductFilters({ category, sort }: ProductFiltersProps) {
           }
         }}
       >
-        <SelectTrigger className="w-full sm:w-52" aria-label="Select category">
+        <SelectTrigger className="w-full sm:w-52">
           <SelectValue placeholder="Sort by" />
         </SelectTrigger>
-        <SelectContent position="popper" side="bottom" sideOffset={5}>
+        <SelectContent>
           {PRODUCT_SORT_OPTIONS.map(({ value, label }) => (
             <SelectItem key={value} value={value}>
               {label}

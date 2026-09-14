@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getProductById } from "@/lib/products";
+// 🚀 1. YENİ: Arka planda yazdığımız silme işlemini çağırıyoruz
 import { deleteProduct } from "./action";
 
 type DeleteProductPageProps = {
@@ -26,6 +27,7 @@ export default async function DeleteProductPage({
     notFound();
   }
 
+  // 🚀 2. YENİ: Silme işlemini bu ürünün ID'sine kilitliyoruz
   const deleteAction = deleteProduct.bind(null, id);
 
   return (
@@ -40,14 +42,14 @@ export default async function DeleteProductPage({
       <Card className="border-destructive/30">
         <CardHeader>
           <CardTitle className="text-destructive">Confirm deletion</CardTitle>
-          
+          {/* 🚀 3. YENİ: Geçici yazıyı sildik, gerçek bir uyarı ekledik */}
           <CardDescription>
             Are you sure you want to delete this product? All product data and images will be permanently removed from the database and Vercel Blob. This action cannot be undone.
           </CardDescription>
         </CardHeader>
         
         <CardContent>
-          
+          {/* 🚀 4. YENİ: Butonları bir form içine aldık ve action'a bağladık */}
           <form action={deleteAction} className="flex gap-3">
             <Button variant="destructive" type="submit">
               Delete product

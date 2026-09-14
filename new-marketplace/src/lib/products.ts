@@ -4,12 +4,10 @@ import { parseStorefrontFiltersFromSearchParams } from "@/lib/validation";
 import type { CreateProductData } from "@/lib/validation/product";
 import { prisma } from "@/lib/prisma";
 import { Currency, isCurrency } from "@/types/currency";
-
 import {
   isProductCategory,
-  isProductSort,
-  ProductSort,
   type ProductCategory,
+  type ProductSort,
 } from "@/types/product";
 
 export type Product = {
@@ -59,32 +57,14 @@ function toProduct(record: PrismaProduct): Product {
 }
 
 export async function getStorefrontProducts(
-  filters: GetStorefrontProductsFilters = {},
+  _filters: GetStorefrontProductsFilters = {},
 ): Promise<Product[]> {
   try {
-    const { category, sort } = filters;
-
-    let prismaOrderBy: any = { createdAt: "desc" };
-
-    if (sort === ProductSort.NAME_ASC) {
-      prismaOrderBy = { name: "asc" };
-    } else if (sort === ProductSort.NAME_DESC) {
-      prismaOrderBy = { name: "desc" };
-    } else if (sort === ProductSort.PRICE_ASC) {
-      prismaOrderBy = { priceCents: "asc" };
-    } else if (sort === ProductSort.PRICE_DESC) {
-      prismaOrderBy = { priceCents: "desc" };
-    }
-
-    const categoryFilter =
-      category && category !== "all" ? { category: category } : {};
-
     const records = await prisma.product.findMany({
       where: {
         isActive: true,
-        ...categoryFilter,
       },
-      orderBy: prismaOrderBy,
+      orderBy: { createdAt: "desc" },
     });
     return records.map(toProduct);
   } catch (error) {
@@ -136,20 +116,10 @@ export async function createProduct(
 export function parseStorefrontFilters(
   searchParams: Record<string, string | string[] | undefined>,
 ): { categoryValue: ProductCategory | "all"; sortValue: ProductSort } {
-  const rawCategory = searchParams.category;
-  const categoryValue =
-    typeof rawCategory === "string" && isProductCategory(rawCategory)
-      ? rawCategory
-      : "all";
+  const { category, sort } =
+    parseStorefrontFiltersFromSearchParams(searchParams);
 
-  const rawSort = searchParams.sort;
-
-  const sortValue =
-    typeof rawSort === "string" && isProductSort(rawSort)
-      ? (rawSort as ProductSort)
-      : ProductSort.NAME_ASC;
-
-  return { categoryValue, sortValue };
+  return { categoryValue: category, sortValue: sort };
 }
 
 export async function deleteProductById(id: string) {
