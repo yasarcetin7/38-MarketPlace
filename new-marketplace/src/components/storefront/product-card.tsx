@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
@@ -23,11 +23,11 @@ type ProductCardProps = {
   category: ProductCategory;
   imageUrl?: string;
   stripePriceId: string;
-  stripeProductId?: string; 
+  stripeProductId?: string;
 };
 
 export function ProductCard({
-  id, 
+  id,
   name,
   description,
   priceCents,
@@ -38,9 +38,8 @@ export function ProductCard({
   stripeProductId = "",
 }: ProductCardProps) {
   const priceLabel = formatPrice(priceCents, currency as Currency);
-  
- 
-  const { addItem } = useCart(); 
+
+  const { addItem } = useCart();
 
   return (
     <Card className="overflow-hidden">
@@ -64,12 +63,15 @@ export function ProductCard({
           <CardTitle className="line-clamp-1 text-base">{name}</CardTitle>
           <Badge variant="secondary">{formatCategoryLabel(category)}</Badge>
         </div>
-        <CardDescription className="line-clamp-2">{description}</CardDescription>
+        <CardDescription className="line-clamp-2">
+          {description}
+        </CardDescription>
       </CardHeader>
       <CardFooter className="border-t border-border pt-4 flex justify-between">
         <p className="text-lg font-semibold text-foreground">{priceLabel}</p>
-        
-        <Button 
+
+        <Button
+          variant="cart"
           onClick={() => {
             addItem({
               id,
@@ -84,7 +86,6 @@ export function ProductCard({
         >
           Add To Cart
         </Button>
-        
       </CardFooter>
     </Card>
   );

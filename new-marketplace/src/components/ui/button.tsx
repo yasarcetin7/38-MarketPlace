@@ -21,7 +21,7 @@ const buttonVariants = cva(
         link: "text-primary",
         success:
           "p-3 mx-1 hover:scale-105 bg-green-500/10 text-green-600 hover:bg-green-500/20 focus-visible:border-green-500/40 focus-visible:ring-green-500/20 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500/30 dark:focus-visible:ring-green-500/40",
-          
+          cart: "font-semibold text-white bg-slate-900 hover:bg-slate-700 dark:bg-slate-400 dark:text-slate-100 dark:hover:bg-slate-300 hover:scale-105 active:scale-95 transition-all duration-200",
       },
       size: {
         default:
