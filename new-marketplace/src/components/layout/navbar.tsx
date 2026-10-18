@@ -64,9 +64,6 @@ export function Navbar({
                   <DropdownMenuItem asChild>
                     <Link href="/" className="cursor-pointer w-full">Products</Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/categories" className="cursor-pointer w-full">Categories</Link>
-                  </DropdownMenuItem>
                   {userIsAdmin && (
                     <DropdownMenuItem asChild>
                       <Link href="/admin/products" className="cursor-pointer w-full">Product Settings</Link>

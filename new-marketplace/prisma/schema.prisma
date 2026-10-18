@@ -11,7 +11,7 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE_URL")
+  url      = env("MONGODB_URI")
 }
 
 model Product {
@@ -72,5 +72,5 @@ model Order {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
-  @@map("orders") // MongoDB'de tablonun adı 'orders' olacak
+  @@map("orders") 
 }

@@ -1,0 +1,16 @@
+{
+  "name": "new-marketplace-38",
+  "private": true,
+  "description": "Storefront (new-marketplace) and API (ECOM-PROJECT) in one workspace.",
+  "workspaces": [
+    "new-marketplace",
+    "ECOM-PROJECT"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w new-marketplace",
+    "dev:web": "npm run dev -w new-marketplace",
+    "dev:api": "npm run dev -w Ecom-Project",
+    "test": "npm run test --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present"
+  }
+}
