@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 export type CartItem = {
   id: string;
@@ -34,21 +40,28 @@ const initialContext: CartContextType = {
 const CartContext = createContext<CartContextType>(initialContext);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>(() => {
-    if (typeof window !== "undefined") {
-      const savedCart = localStorage.getItem("shopping-cart");
-      if (savedCart) {
-        try {
-          return JSON.parse(savedCart);
-        } catch (error) {
-          console.error("Sepet yüklenirken hata oluştu");
-        }
-      }
-    }
-    return [];
-  });
+  const [items, setItems] = useState<CartItem[]>([]);
+  const skipNextSave = useRef(true);
 
   useEffect(() => {
+    const savedCart = localStorage.getItem("shopping-cart");
+    if (savedCart) {
+      try {
+        const parsed: unknown = JSON.parse(savedCart);
+        if (Array.isArray(parsed)) {
+          setItems(parsed);
+        }
+      } catch {
+        console.error("Sepet yüklenirken hata oluştu");
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (skipNextSave.current) {
+      skipNextSave.current = false;
+      return;
+    }
     localStorage.setItem("shopping-cart", JSON.stringify(items));
   }, [items]);
 

@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: API tests
+        run: npm test -w Ecom-Project
+        env:
+          STRIPE_SECRET_KEY: sk_test_ci_placeholder
+          STRIPE_WEBHOOK_SECRET: whsec_ci_placeholder
+          API_PORT: 8000
+
+      - name: Storefront unit tests
+        run: npm test -w new-marketplace
+
+      - name: Install Playwright browsers
+        working-directory: new-marketplace
+        run: npx playwright install --with-deps
+
+      - name: Playwright tests
+        working-directory: new-marketplace
+        run: npx playwright test
